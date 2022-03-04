@@ -180,3 +180,14 @@ const random = (min, max) => {
     return console.log(Math.floor(Math.random() * (max - min + 1) + min));
 };
 random(8);
+
+const generateKey = (length, characters) => {
+    const charLength = characters.length;
+    let key = '';
+    for (let i = 0; i < length; i++) {
+        const index = Math.floor(Math.random() * charLength);
+        key += characters[index];
+    }
+    return console.log(key);
+};
+generateKey(5, 'Nastya');
