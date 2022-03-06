@@ -191,3 +191,121 @@ const generateKey = (length, characters) => {
     return console.log(key);
 };
 generateKey(5, 'Nastya');
+
+// Объект
+// -----------------------------------
+const object = {
+    x: 1,
+    y: 2,
+    move(x, y) {
+        (this.x += x), (this.y += y);
+    },
+    toString() {
+        return `[${this.x}, ${this.y}]`;
+    },
+};
+// -----------------------------------
+console.log(object.x, object.y);
+object.move(2, 3);
+console.log(object.x, object.y);
+console.log(object);
+console.log(object.toString());
+
+//  Прототип
+// -----------------------------------
+function Point(x, y) {
+    this.x = x;
+    this.y = y;
+}
+// статический метод конструктора (нельзя вызвать у объекта)
+Point.from = function (obj) {
+    const { x, y } = obj;
+    return new Point(x, y);
+};
+console.log(Point.from(object));
+// методы экземпляров конструктора (объектов)
+Point.prototype.move = function (x, y) {
+    this.x += x;
+    this.y += y;
+};
+Point.prototype.toString = function () {
+    return `[${this.x}, ${this.y}]`;
+};
+// -----------------------------------
+console.log(Point.prototype);
+console.log(Point.prototype.move.prototype);
+const pointObj = new Point(20, 50);
+pointObj.move(5, 9);
+console.log(pointObj);
+console.log(pointObj.toString());
+
+// Класс
+// -----------------------------------
+class PointClass {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    static from(obj) {
+        const { x, y } = obj;
+        return new PointClass(x, y);
+    }
+    move(x, y) {
+        this.x += x;
+        this.y += y;
+    }
+    toString() {
+        return `[${this.x}, ${this.y}]`;
+    }
+}
+// -----------------------------------
+const classObjPoint = new PointClass(45, 89);
+console.log(classObjPoint);
+console.log(classObjPoint.toString());
+
+// Замыкание
+// -----------------------------------
+const point = (x, y) => {
+    const p = {};
+    p.move = (x, y) => {
+        x += x;
+        y += y;
+    };
+    p.toString = () => {
+        return `[${x}, ${y}]`;
+    };
+    return p;
+};
+// -----------------------------------
+const closureObj = point(5, 5);
+closureObj.move(3, 7);
+console.log(closureObj);
+console.log(closureObj.toString());
+
+// bind, call, apply
+// -----------------------------------
+function move(x, y) {
+    this.x += x;
+    this.y += y;
+}
+function toString() {
+    return `[${this.x}, ${this.y}]`;
+}
+const p1 = {
+    x: 10,
+    y: 20,
+};
+// -----------------------------------
+console.log(p1);
+const pmove = move.bind(p1);
+pmove(23, 45);
+console.log(p1);
+
+const pstring = toString.bind(p1);
+console.log(pstring());
+
+move.call(p1, 1, 2);
+console.log(pstring());
+
+move.apply(p1, [34, 89]);
+console.log(pstring());
