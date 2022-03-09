@@ -267,10 +267,12 @@ console.log(classObjPoint.toString());
 // -----------------------------------
 const point = (x, y) => {
     const p = {};
-    p.move = (x, y) => {
-        x += x;
-        y += y;
+    // добавляем метод в объект
+    p.move = (a, b) => {
+        x += a;
+        y += b;
     };
+    // добавляем метод в объект
     p.toString = () => {
         return `[${x}, ${y}]`;
     };
@@ -309,3 +311,74 @@ console.log(pstring());
 
 move.apply(p1, [34, 89]);
 console.log(pstring());
+
+// Прототипное наследвание
+// -----------------------------------
+function Rect(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+}
+Rect.prototype.toString = function () {
+    return `[${this.x}, ${this.y}, ${this.width}, ${this.height}]`;
+};
+function Square(x, y, side) {
+    Rect.call(this, x, y, side, side);
+}
+Object.setPrototypeOf(Square.prototype, Rect.prototype); // чтобы иметь доступ к методу toString у Rect
+// -----------------------------------
+const r = new Rect(1, 3, 5, 3);
+const p = new Square(1, 3, 5);
+console.log(r.toString());
+console.log(p.toString());
+
+// Классы - наследование
+// -----------------------------------
+class Rect1 {
+    constructor(x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    toString() {
+        return `[${this.x}, ${this.y}, ${this.width}, ${this.height}]`;
+    }
+}
+class Square1 extends Rect1 {
+    constructor(x, y, side) {
+        super(x, y, side, side);
+    }
+}
+// -----------------------------------
+const s = new Square1(4, 5, 6);
+const re = new Rect1(4, 5, 6, 7);
+console.log(re.toString());
+console.log(s.toString());
+
+// __proro__ Ссылка на prototype
+// -----------------------------------
+function Rect2(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+}
+
+Rect2.prototype.toString = function () {
+    return `[${this.x}, ${this.y}]`;
+};
+// -----------------------------------
+const k = { x: 2, y: 5 };
+k.__proto__ = Rect2.prototype;
+console.log(k.toString());
+// -----------------------------------
+class Rect3 {
+    toString() {
+        return `{${this.x}, ${this.y}}`;
+    }
+}
+// -----------------------------------
+k.__proto__ = Rect3.prototype;
+console.log(k.toString());
