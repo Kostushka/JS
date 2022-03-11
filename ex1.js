@@ -382,3 +382,32 @@ class Rect3 {
 // -----------------------------------
 k.__proto__ = Rect3.prototype;
 console.log(k.toString());
+
+// Сеттеры и геттеры
+// -----------------------------------
+class Figure {
+    constructor() {
+        this.x;
+        this.y;
+        this.width = 45;
+    }
+    // сеттер
+    set add(x) {
+        this.x = x;
+    }
+    // геттер
+    get getWidth() {
+        return `${this.width + this.x}`;
+    }
+
+    toString() {
+        return this.x;
+    }
+}
+// -----------------------------------
+const figure = new Figure();
+figure.add = 5;
+console.log(figure.toString());
+figure.add = 30;
+console.log(figure.toString());
+console.log(figure.getWidth);
