@@ -411,3 +411,27 @@ console.log(figure.toString());
 figure.add = 30;
 console.log(figure.toString());
 console.log(figure.getWidth);
+
+// Каррирование
+// -----------------------------------
+const curr =
+    (fn) =>
+    (...args) => {
+        if (fn.length > args.length) {
+            const f = fn.bind(null, ...args);
+            return curr(f);
+        } else {
+            return fn(...args);
+        }
+    };
+curr();
+const sum = (a, b, c, d) => {
+    return a + b + c + d;
+};
+const f = curr(sum);
+const f1 = f(1, 2, 3, 4);
+const f2 = f(1, 2, 3)(4);
+const f3 = f(1, 2)(3, 4);
+const f4 = f(1)(2, 3, 4);
+console.log(f1, f2, f3, f4);
+// -----------------------------------
