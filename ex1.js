@@ -435,3 +435,56 @@ const f3 = f(1, 2)(3, 4);
 const f4 = f(1)(2, 3, 4);
 console.log(f1, f2, f3, f4);
 // -----------------------------------
+
+// Кэширование
+// -----------------------------------
+const fncach = () => {
+    const cach = {};
+    return (key) => {
+        let res = cach[key];
+        if (res) {
+            console.log('Кэш', res);
+            return res;
+        } else {
+            cach[key] = 'value' + key;
+            res = cach[key];
+            console.log('Вычисление', res);
+            return res;
+        }
+    };
+};
+// -----------------------------------
+const f11 = fncach();
+const f12 = fncach();
+
+f11(1);
+f11(2);
+f11(1);
+f11(2);
+
+f12(1);
+f12(1);
+
+// setTimeout с изменением приема аргументов и каррированием
+// -----------------------------------
+const curr1 =
+    (fn) =>
+    (...args) => {
+        if (fn.length > args.length) {
+            const f = fn.bind(null, ...args);
+            return curr(f);
+        } else {
+            return fn(...args);
+        }
+    };
+
+const fnlog = () => {
+    return console.log('Ляляляля');
+};
+
+const invertTimeout = (time, fn) => setTimeout(fn, time);
+
+const timer = curr1(invertTimeout);
+// -----------------------------------
+const t = timer(2000);
+t(fnlog);
