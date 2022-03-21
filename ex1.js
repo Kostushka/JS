@@ -488,3 +488,44 @@ const timer = curr1(invertTimeout);
 // -----------------------------------
 const t = timer(2000);
 t(fnlog);
+
+/* Реализуйте интроспекцию объекта:
+Проитерируйте все ключи объекта iface
+Возьмите ключи функционального типа
+Для каждой функции возьмите количество аргументов
+Сохраните результаты в двумерный массив
+*/
+
+const iface = {
+    m1: (x) => [x],
+    m2: function (x, y) {
+        return [x, y];
+    },
+    m3(x, y, z) {
+        return [x, y, z];
+    },
+};
+// -----------------------------------
+const objfn = (obj) => {
+    const arr = [];
+    for (let key in obj) {
+        arr.push([key, obj[key].length]);
+    }
+    console.log(arr);
+    return arr;
+};
+
+const ifacefn = (obj) => {
+    const arr = [];
+    for (let key in obj) {
+        const value = obj[key];
+        if (typeof value === 'function') {
+            arr.push([key, value.length]);
+        }
+    }
+    console.log(arr);
+    return arr;
+};
+// -----------------------------------
+objfn(iface);
+ifacefn(iface);
