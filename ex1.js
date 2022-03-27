@@ -529,3 +529,29 @@ const ifacefn = (obj) => {
 // -----------------------------------
 objfn(iface);
 ifacefn(iface);
+
+// Реализуйте функцию array() создающую функциональный объект, который содержит массив в своем замыкании и обеспечивает следующий интерфейс доступа к нему:
+// Создание нового экземпляра const a = array();
+// Получение элемента по индексу a(i)
+// Добавление элемента в конец a.push(value)
+// Удаление последнего элемента и получение его значения a.pop()
+// -----------------------------------
+const array = () => {
+    const arr = [];
+    const get = (i) => arr[i];
+    get.push = (x) => arr.push(x);
+    get.pop = () => arr.pop();
+    return get;
+};
+// -----------------------------------
+const arrj = array();
+arrj.push('first');
+arrj.push('second');
+arrj.push('third');
+console.log(arrj(0)); // Выводит: first
+console.log(arrj(1)); // Выводит: second
+console.log(arrj(2)); // Выводит: third
+console.log(arrj.pop()); // Выводит: third
+console.log(arrj.pop()); // Выводит: second
+console.log(arrj.pop()); // Выводит: first
+console.log(arrj.pop()); // Выводит: undefined
