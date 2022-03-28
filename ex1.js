@@ -555,3 +555,27 @@ console.log(arrj.pop()); // Выводит: third
 console.log(arrj.pop()); // Выводит: second
 console.log(arrj.pop()); // Выводит: first
 console.log(arrj.pop()); // Выводит: undefined
+
+// Функция обертка синхронная
+const wrap =
+    (before, after, func) =>
+    (...args) =>
+        after(func(...before(...args)));
+
+const before = (...args) => {
+    console.log('before', args);
+    return args;
+};
+
+const after = (args) => {
+    console.log('after', args);
+    return args;
+};
+
+const func = (x, y) => {
+    console.log('func', x, y);
+    return [x, y];
+};
+
+const wrapped = wrap(before, after, func);
+wrapped('Hi', 'Bye');
