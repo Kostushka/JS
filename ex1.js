@@ -357,7 +357,7 @@ const re = new Rect1(4, 5, 6, 7);
 console.log(re.toString());
 console.log(s.toString());
 
-// __proro__ Ссылка на prototype
+// __proto__ Ссылка на prototype
 // -----------------------------------
 function Rect2(x, y, width, height) {
     this.x = x;
